@@ -29,13 +29,15 @@ func dirTree(out *os.File, path string, printFiles bool) error {
 	if err != nil {
 		return err
 	}
-
+	var result string
 	for _, file := range files {
 		info, err := file.Info()
 		if err != nil {
 			return err
 		}
-		fmt.Fprintf(out, "info: %s %v\n", info.Name(), info.Size())
+		result = result + fmt.Sprintf("info: %s %v\n", info.Name(), info.Size())
+
 	}
+	fmt.Fprint(out, result)
 	return nil
 }
