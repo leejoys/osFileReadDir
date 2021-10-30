@@ -30,12 +30,23 @@ func dirTree(out *os.File, path string, printFiles bool) error {
 		return err
 	}
 	var result string
+	var space string
 	for _, file := range files {
 		info, err := file.Info()
 		if err != nil {
 			return err
 		}
-		result = result + fmt.Sprintf("info: %s %v\n", info.Name(), info.Size())
+		if info.IsDir() {
+			result = result + fmt.Sprintf("%s└───%s\n", space, info.Name())
+			newPath := path + fmt.Sprintf("/%s", info.Name())
+			space = space + "\t"
+			err := dirTree(out, newPath, printFiles)
+			if err != nil {
+				return err
+			}
+			continue
+		}
+		result = result + fmt.Sprintf("%s├───%s (%db)\n", space, info.Name(), info.Size())
 
 	}
 	fmt.Fprint(out, result)
