@@ -21,8 +21,21 @@ func main() {
 
 func dirTree(out *os.File, path string, printFiles bool) error {
 	file, err := os.Open(path)
+	if err != nil {
+		return err
+	}
 	defer file.Close()
-	entries, err := file.ReadDir(0)
-	fmt.Println(entries)
-	return err
+	files, err := file.ReadDir(0)
+	if err != nil {
+		return err
+	}
+
+	for _, file := range files {
+		info, err := file.Info()
+		if err != nil {
+			return err
+		}
+		fmt.Fprintf(out, "info: %s %v\n", info.Name(), info.Size())
+	}
+	return nil
 }
