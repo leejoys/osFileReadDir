@@ -8,16 +8,20 @@ import (
 
 func main() {
 	out := os.Stdout
-	if !(len(os.Args) == 2 || len(os.Args) == 3) {
-		log.Fatal("usage go run main.go . [-f]")
-	}
-	path := os.Args[1]
-	printFiles := len(os.Args) == 3 && os.Args[2] == "-f"
+	// if !(len(os.Args) == 2 || len(os.Args) == 3) {
+	// 	log.Fatal("usage go run main.go . [-f]")
+	// }
+	// path := os.Args[1]
+	// printFiles := len(os.Args) == 3 && os.Args[2] == "-f"
+	path := "./testdata"
+	printFiles := false
 	err := dirTree(out, path, printFiles)
 	if err != nil {
 		log.Fatal(err)
 	}
 }
+
+//todo https://cs.opensource.google/go/go/+/refs/tags/go1.17.2:src/path/filepath/path.go;l=400
 
 func dirTree(out *os.File, path string, printFiles bool) error {
 	file, err := os.Open(path)
