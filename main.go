@@ -22,7 +22,7 @@ func main() {
 }
 
 //todo https://cs.opensource.google/go/go/+/refs/tags/go1.17.2:src/path/filepath/path.go;l=400
-
+//todo https://pkg.go.dev/path/filepath#Walk
 func dirTree(out *os.File, path string, printFiles bool) error {
 	file, err := os.Open(path)
 	if err != nil {
