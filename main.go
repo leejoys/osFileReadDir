@@ -6,6 +6,11 @@ import (
 	"os"
 )
 
+type rString struct {
+	prefix string
+	body   string
+}
+
 func main() {
 	out := os.Stdout
 	// if !(len(os.Args) == 2 || len(os.Args) == 3) {
